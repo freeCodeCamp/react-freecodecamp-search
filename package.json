@@ -46,7 +46,7 @@
     "eslint-plugin-prefer-object-spread": "^1.2.1",
     "eslint-plugin-react": "^7.1.0",
     "express": "^4.15.3",
-    "jest": "^20.0.4",
+    "jest": "^21.0.2",
     "nodemon": "^1.11.0",
     "react-bootstrap": "^0.31.0",
     "react-test-renderer": "^15.6.1",
