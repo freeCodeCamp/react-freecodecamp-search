@@ -9,8 +9,6 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import {search } from './search';
 
-import './fcc-search-bar.css';
-
 const propTypes = {
   handleResults: PropTypes.func.isRequired,
   handleSearchingState: PropTypes.func,
@@ -108,6 +106,25 @@ class FCCSearchBar extends React.PureComponent {
     const { searchTerm } = this.state;
     return (
       <div className="fcc_searchBar">
+        <style>
+          {`
+          .fcc_input {
+            min-width: 100%;
+            width: 100%;
+            height: 30px;
+          }
+
+          .fcc_searchBar {
+            width: 100%;
+          }
+
+          @media (min-width: 992px) {
+            .fcc_searchBar {
+              width: 75%;
+            }
+          }
+          `}
+        </style>
         <form onSubmit={this.handleSubmit} className="fcc_searchForm">
           <ControlLabel htmlFor="fcc_searchInput" srOnly={true}>
             Search
