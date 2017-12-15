@@ -16,6 +16,7 @@ const requestUrl = 'https://search.freecodecamp.org';
 
 const propTypes = {
   handleResults: PropTypes.func.isRequired,
+  handleSearchTerm: PropTypes.func,
   placeholder: PropTypes.string
 };
 
@@ -43,9 +44,10 @@ class FCCSearchBar extends React.PureComponent {
         searchTerm.length !== previousSearchTerm.length
       ) {
         previousSearchTerm = searchTerm.slice(0);
-        return this.getSearchResults();
+        this.getSearchResults();
       }
       previousSearchTerm = searchTerm.slice(0);
+      this.props.handleSearchTerm(searchTerm);
       return;
     });
   }
@@ -153,6 +155,7 @@ FCCSearchBar.defaultProps = {
       'Expected a "handleResults" prop in FCCSearchBar, instead we are using a default fallback'
     );
   },
+  handleSearchTerm: () => {},
   placeholder: 'What would you like to know?'
 };
 FCCSearchBar.displayName = 'FCCSearchBar';

@@ -1,6 +1,6 @@
 {
   "name": "react-freecodecamp-search",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A React component that utilises our Elasticsearch search engine",
   "repository": {
     "type": "git",
@@ -30,11 +30,6 @@
     }
   },
   "dependencies": {
-    "prettier": "^1.9.2",
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1",
-    "react-fontawesome": "^1.6.1",
     "rxjs": "^5.5.5",
     "xhr": "^2.4.1"
   },
@@ -60,7 +55,11 @@
     "express": "^4.15.3",
     "jest": "^20.0.4",
     "nodemon": "^1.11.0",
+    "prettier": "^1.9.2",
+    "prop-types": "^15.5.10",
     "proxyquire": "^1.8.0",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
     "react-bootstrap": "^0.31.0",
     "react-test-renderer": "^15.6.1",
     "style-loader": "^0.18.2",
