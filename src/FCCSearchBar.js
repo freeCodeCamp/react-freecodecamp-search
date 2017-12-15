@@ -5,17 +5,15 @@ import { merge } from 'rxjs/observable/merge';
 import { debounceTime } from 'rxjs/operators/debounceTime';
 import { throttleTime } from 'rxjs/operators/throttleTime';
 import { distinctUntilChanged } from 'rxjs/operators/distinctUntilChanged';
-import xhr from 'xhr';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import FormControl from 'react-bootstrap/lib/FormControl';
+import {search } from './search';
 
-import { normaliser } from './resultNormaliser';
 import './fcc-search-bar.css';
-
-const requestUrl = 'https://search.freecodecamp.org';
 
 const propTypes = {
   handleResults: PropTypes.func.isRequired,
+  handleSearchingState: PropTypes.func,
   handleSearchTerm: PropTypes.func,
   placeholder: PropTypes.string
 };
@@ -29,7 +27,9 @@ class FCCSearchBar extends React.PureComponent {
     this.getSearchResults = this.getSearchResults.bind(this);
     this.handleResults = this.handleResults.bind(this);
     this.handleBlur = this.handleBlur.bind(this);
+    this.handleSearchingState = this.handleSearchingState.bind(this);
     this.state = {
+      isSearching: false,
       results: [],
       searchTerm: ''
     };
@@ -53,49 +53,21 @@ class FCCSearchBar extends React.PureComponent {
   }
 
   getSearchResults() {
-    const self = this;
-    const { searchTerm } = this.state;
-    xhr(
-      {
-        method: 'get',
-        uri: `${requestUrl}/search?q=${searchTerm}`
-      },
-      function(err, resp, body) {
-        if (resp.statusCode !== 200) {
-          self.setState(
-            state => ({
-              ...state,
-              results: []
-            }),
-            () => self.handleResults()
-          );
-          console.error('Something went wrong whilst searching');
-          console.error(err);
-          return;
-        } else if (err) {
-          self.setState(
-            state => ({
-              ...state,
-              results: []
-            }),
-            () => self.handleResults()
-          );
-          console.error('Something went wrong');
-          console.error(err);
-          return;
-        }
-        const data = JSON.parse(body);
-        const results = normaliser(data);
-        self.setState(
-          state => ({
-            ...state,
-            results
-          }),
-          () => self.handleResults()
-        );
-        return;
-      }
-    );
+    const { searchTerm, isSearching } = this.state;
+    this.setState(state => ({
+      ...state,
+      isSearching: true
+    }),
+    () => {
+      this.handleSearchingState(isSearching);
+      search({
+      update: this.setState.bind(this),
+      searchTerm,
+      handleResults: this.handleResults,
+      handleSearchingState: this.handleSearchingState
+    })}
+  );
+
   }
 
   handleBlur() {
@@ -117,8 +89,14 @@ class FCCSearchBar extends React.PureComponent {
   }
 
   handleResults() {
-    const { results } = this.state;
+    const { isSearching, results } = this.state;
+    this.props.handleSearchingState(isSearching)
     this.props.handleResults(results);
+  }
+
+  handleSearchingState() {
+    const {isSearching} = this.state;
+    this.props.handleSearchingState(isSearching);
   }
 
   handleSubmit(e) {
@@ -156,7 +134,8 @@ FCCSearchBar.defaultProps = {
     );
   },
   handleSearchTerm: () => {},
-  placeholder: 'What would you like to know?'
+  placeholder: 'What would you like to know?',
+  handleSearchingState: () => {}
 };
 FCCSearchBar.displayName = 'FCCSearchBar';
 FCCSearchBar.propTypes = propTypes;

@@ -12,6 +12,12 @@ ReactDOM.render(
           handleResults={res => {
             console.log('hadleResults prop', res);
           }}
+          handleSearchTerm={value => {
+            console.log('handleSearchTerm', value);
+          }}
+          handleSearchingState={state => {
+            console.log('searchingState', state);
+          }}
         />
       </Col>
       <Col md={2} xs={0} />
