@@ -10,7 +10,7 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import {search } from './search';
 
 const propTypes = {
-  handleResults: PropTypes.func.isRequired,
+  handleResults: PropTypes.func,
   handleSearchingState: PropTypes.func,
   handleSearchTerm: PropTypes.func,
   placeholder: PropTypes.string
@@ -145,11 +145,7 @@ class FCCSearchBar extends React.PureComponent {
 }
 
 FCCSearchBar.defaultProps = {
-  handleResults: () => {
-    console.warn(
-      'Expected a "handleResults" prop in FCCSearchBar, instead we are using a default fallback'
-    );
-  },
+  handleResults: () => {},
   handleSearchTerm: () => {},
   placeholder: 'What would you like to know?',
   handleSearchingState: () => {}
