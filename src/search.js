@@ -5,9 +5,7 @@ const requestUrl = 'https://search.freecodecamp.org';
 
 export function search({
   update,
-  searchTerm,
-  handleResults,
-  handleSearchingState
+  searchTerm
 }) {
   xhr(
     {
@@ -20,11 +18,7 @@ export function search({
           state => ({
             ...state,
             results: []
-          }),
-          () => {
-            handleSearchingState()
-            handleResults()
-          }
+          })
         );
         console.error('Something went wrong whilst searching');
         console.error(err);
@@ -35,11 +29,7 @@ export function search({
             ...state,
             isSearching: false,
             results: []
-          }),
-          () => {
-            handleSearchingState()
-            handleResults()
-          }
+          })
         );
         console.error('Something went wrong');
         console.error(err);
@@ -52,11 +42,7 @@ export function search({
           ...state,
           isSearching: false,
           results
-        }),
-        () => {
-          handleSearchingState()
-          handleResults()
-        }
+        })
       );
       return;
     }
