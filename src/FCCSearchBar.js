@@ -47,19 +47,15 @@ class FCCSearchBar extends React.PureComponent {
     this.stream$ = merge(
       this.input.pipe(debounceTime(500)),
       this.input.pipe(throttleTime(500), distinctUntilChanged())
-    )
-      .subscribe(() => {
-        const { searchTerm } = this.state;
-        if (
-          searchTerm.length > 2 &&
-          searchTerm !== previousSearchTerm
-        ) {
-          previousSearchTerm = searchTerm.slice(0);
-          this.getSearchResults();
-        }
+    ).subscribe(() => {
+      const { searchTerm } = this.state;
+      if (searchTerm.length > 2 && searchTerm !== previousSearchTerm) {
         previousSearchTerm = searchTerm.slice(0);
-        return;
-      });
+        this.getSearchResults();
+      }
+      previousSearchTerm = searchTerm.slice(0);
+      return;
+    });
   }
 
   componentDidUpdate() {
@@ -67,18 +63,19 @@ class FCCSearchBar extends React.PureComponent {
   }
 
   getSearchResults() {
-    const { searchTerm} = this.state;
-    this.setState(state => ({
-      ...state,
-      isSearching: true
-    }),
-    () => {
-      search({
-      update: this.setState,
-      searchTerm,
-    })}
-  );
-
+    const { searchTerm } = this.state;
+    this.setState(
+      state => ({
+        ...state,
+        isSearching: true
+      }),
+      () => {
+        search({
+          update: this.setState,
+          searchTerm
+        });
+      }
+    );
   }
 
   handleBlur() {
@@ -107,11 +104,15 @@ class FCCSearchBar extends React.PureComponent {
   }
 
   provideFeedback() {
-    const { handleResults, handleSearchingState, handleSearchTerm } = this.props;
+    const {
+      handleResults,
+      handleSearchingState,
+      handleSearchTerm
+    } = this.props;
     const { results, isSearching, searchTerm } = this.state;
-    handleResults(results)
-    handleSearchingState(isSearching)
-    handleSearchTerm(searchTerm)
+    handleResults(results);
+    handleSearchingState(isSearching);
+    handleSearchTerm(searchTerm);
     return;
   }
 
@@ -120,7 +121,7 @@ class FCCSearchBar extends React.PureComponent {
       ...state,
       results: [],
       searchTerm: ''
-    }))
+    }));
   }
 
   render() {
@@ -129,8 +130,8 @@ class FCCSearchBar extends React.PureComponent {
     return (
       <div className="fcc_searchBar">
         <style>
-          { mainCSS }
-          { dropdownCSS }
+          {mainCSS}
+          {dropdownCSS}
         </style>
         <form onSubmit={this.handleSubmit} className="fcc_searchForm">
           <ControlLabel htmlFor="fcc_searchInput" srOnly={true}>
@@ -146,9 +147,12 @@ class FCCSearchBar extends React.PureComponent {
             value={searchTerm}
           />
         </form>
-        {
-          dropdown && results.length ? <SearchResults reset={this.reset} results={results} update={this.setState} /> : null
-        }
+        {dropdown && results.length ? (
+          <SearchResults
+            reset={this.reset}
+            results={results}
+          />
+        ) : null}
       </div>
     );
   }
