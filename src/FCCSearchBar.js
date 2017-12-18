@@ -129,10 +129,7 @@ class FCCSearchBar extends React.PureComponent {
     const { searchTerm, results } = this.state;
     return (
       <div className="fcc_searchBar">
-        <style>
-          {mainCSS}
-          {dropdownCSS}
-        </style>
+        <style dangerouslySetInnerHTML={{__html: mainCSS + dropdownCSS }} />
         <form onSubmit={this.handleSubmit} className="fcc_searchForm">
           <ControlLabel htmlFor="fcc_searchInput" srOnly={true}>
             Search
