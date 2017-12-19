@@ -1,8 +1,10 @@
 export const mainCSS = `
 .fcc_input {
+  font-family: 'Lato', 'FontAwesome', sans-serif;
   min-width: 100%;
   width: 100%;
   height: 30px;
+  background-color: #fff;
 }
 
 .fcc_searchBar {
@@ -32,11 +34,11 @@ export const dropdownCSS = `
   margin-bottom: 0px;
 }
 
-.fcc_resultItem {
-  padding-top: 0px;
+.fcc_resultItem.header {
+  padding: 0px;
 }
 
-.fcc_resultItem:hover {
+.fcc_resultItem.hasContent:hover {
   background-color: #f5f5f5
 }
 
@@ -44,6 +46,8 @@ export const dropdownCSS = `
   background-color: #006400;
   color: #fff;
   padding-top: 5px;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .fcc_resultLink {
@@ -57,5 +61,11 @@ export const dropdownCSS = `
 
 .fcc_resultContent {
   padding-top: 10px;
+}
+
+.fcc_resultHighlight {
+  background-color: #ffa500;
+  color: #000;
+  padding: 2px 5px;
 }
 `;

@@ -129,7 +129,7 @@ class FCCSearchBar extends React.PureComponent {
     const { searchTerm, results } = this.state;
     return (
       <div className="fcc_searchBar">
-        <style dangerouslySetInnerHTML={{__html: mainCSS + dropdownCSS }} />
+        <style dangerouslySetInnerHTML={{ __html: mainCSS + dropdownCSS }} />
         <form onSubmit={this.handleSubmit} className="fcc_searchForm">
           <ControlLabel htmlFor="fcc_searchInput" srOnly={true}>
             Search
@@ -145,10 +145,7 @@ class FCCSearchBar extends React.PureComponent {
           />
         </form>
         {dropdown && results.length ? (
-          <SearchResults
-            reset={this.reset}
-            results={results}
-          />
+          <SearchResults reset={this.reset} results={results} />
         ) : null}
       </div>
     );

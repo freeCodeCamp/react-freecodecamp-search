@@ -1,5 +1,4 @@
 import xhr from 'xhr';
-import { normaliser } from './resultNormaliser';
 
 const requestUrl = 'https://search.freecodecamp.org';
 
@@ -28,8 +27,7 @@ export function search({ update, searchTerm }) {
         console.error(err);
         return;
       }
-      const data = JSON.parse(body);
-      const results = normaliser(data);
+      const results = JSON.parse(body);
       update(state => ({
         ...state,
         isSearching: false,

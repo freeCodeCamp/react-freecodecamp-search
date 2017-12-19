@@ -26,43 +26,104 @@ function handleEvent(fn) {
   };
 }
 
-function renderResults(reset, results) {
-  return results.map(result => (
-    <li className="fcc_resultItem list-group-item" key={`${result._id}`}>
-      <a
-        className="fcc_resultLink"
-        href={result._source.url}
-        onClick={handleEvent(reset)}
-        target="_blank"
-      >
-        <Row className="fcc_resultHeading-wrap">
-          <Col className="fcc_resultHeading" xs={12}>
-            <h4 className="list-group-item-heading">
-              {result._index.replace(/s$/, '').toUpperCase()}
-            </h4>
-          </Col>
-        </Row>
-        <Row className="fcc_resultContent">
-          <Col className="fcc_resultTitle" xs={4}>
-            <h5>
-              <strong>{result._source.title}</strong>
-            </h5>
-          </Col>
-          <Col className="fcc_resultDescription" xs={8}>
-            <div>{result._source.description}</div>
-          </Col>
-        </Row>
-      </a>
+function renderResults(reset, index, results) {
+  const firstResult = results.slice(0, 1)[0];
+  return (
+    <li className="fcc_resultItem header list-group-item" key={`${index}`}>
+      <Row className="fcc_resultHeading-wrap">
+        <Col className="fcc_resultHeading" xs={12}>
+          <h4 className="list-group-item-heading">
+            {index.replace(/s$/, '').toUpperCase()}
+          </h4>
+        </Col>
+      </Row>
+      {results.length === 0 ? (
+        <ListGroup className="fcc_resultList" componentClass="ul">
+          <li className="fcc_resultItem list-group-item">
+            <Row className="fcc_resultContent">
+              <Col className="fcc_resultTitle" xs={4}>
+                <h5>
+                  <strong>Nothing found for this category</strong>
+                </h5>
+              </Col>
+            </Row>
+          </li>
+        </ListGroup>
+      ) : (
+        <ListGroup className="fcc_resultList" componentClass="ul">
+          {results.map(({ _source, highlight = {} }, i) => {
+            const { friendlySearchString: highlights } = highlight;
+            return (
+              <a
+                className="fcc_resultLink"
+                href={_source.url}
+                key={_source.url + i}
+                onClick={handleEvent(reset)}
+                target="_blank"
+              >
+                <li
+                  className="fcc_resultItem hasContent list-group-item"
+                  key={`${index}`}
+                >
+                  <Row className="fcc_resultContent">
+                    <Col className="fcc_resultTitle" xs={4}>
+                      <h5>
+                        <strong>{_source.title}</strong>
+                      </h5>
+                      {highlights && highlights.length > 1 ? (
+                        <span className="fcc_resultMarker">
+                          Showing top 2 of {`${highlights.length}`} matches
+                        </span>
+                      ) : null}
+                    </Col>
+                    <Col className="fcc_resultDescription" xs={8}>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: `<p>${
+                            highlights
+                              ? highlights.slice(0, 2).join('</p><p>')
+                              : `${_source.title}`
+                          }</p>`
+                        }}
+                      />
+                    </Col>
+                  </Row>
+                </li>
+              </a>
+            );
+          })}
+        </ListGroup>
+      )}
     </li>
-  ));
+  );
 }
 
+const defaultResultsMap = {
+  challenge: [],
+  guides: [],
+  youtube: []
+};
+
 function SearchResults({ reset, results }) {
+  const sortedResults = results.reduce(
+    (accu, current) => ({
+      ...accu,
+      [current._index]: [...accu[current._index], current]
+    }),
+    defaultResultsMap
+  );
+
   return (
     <div className="dropdown-content">
-      <ListGroup className="fcc_resultList" componentClass="ul">
-        {renderResults(reset, results)}
-      </ListGroup>
+      {Object.keys(sortedResults).map(index => (
+        <ListGroup
+          className="fcc_resultList"
+          componentClass="ul"
+          key={`parent-${index}`}
+        >
+          {renderResults(reset, index, sortedResults[index])}
+        </ListGroup>
+      ))}
     </div>
   );
 }
