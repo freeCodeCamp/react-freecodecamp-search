@@ -27,7 +27,6 @@ function handleEvent(fn) {
 }
 
 function renderResults(reset, index, results) {
-  const firstResult = results.slice(0, 1)[0];
   return (
     <li className="fcc_resultItem header list-group-item" key={`${index}`}>
       <Row className="fcc_resultHeading-wrap">
