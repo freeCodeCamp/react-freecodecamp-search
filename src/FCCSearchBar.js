@@ -135,6 +135,7 @@ class FCCSearchBar extends React.PureComponent {
             Search
           </ControlLabel>
           <FormControl
+            autoComplete="off"
             className="fcc_input"
             id="fcc_searchInput"
             onBlur={this.handleBlur}
