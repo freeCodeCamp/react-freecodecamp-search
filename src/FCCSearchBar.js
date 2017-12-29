@@ -79,12 +79,8 @@ class FCCSearchBar extends React.PureComponent {
   }
 
   handleBlur() {
-    const { dropdown } = this.props;
-    if (dropdown) {
-      // Allow the dropdown to handle a click before we reset
-      return setTimeout(() => this.reset(), 200);
-    }
-    return this.reset();
+    // allow time for a result click
+    return setTimeout(() => this.reset(), 200);
   }
 
   handleChange(e) {
