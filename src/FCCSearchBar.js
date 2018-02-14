@@ -16,6 +16,7 @@ const propTypes = {
   handleResults: PropTypes.func,
   handleSearchingState: PropTypes.func,
   handleSearchTerm: PropTypes.func,
+  onBlur: PropTypes.func,
   placeholder: PropTypes.string
 };
 
@@ -23,6 +24,7 @@ const defaultProps = {
   dropdown: false,
   handleResults: () => {},
   handleSearchTerm: () => {},
+  onBlur: null,
   placeholder: 'What would you like to know?',
   handleSearchingState: () => {}
 };
@@ -80,7 +82,12 @@ class FCCSearchBar extends React.PureComponent {
 
   handleBlur() {
     // allow time for a result click
-    return setTimeout(() => this.reset(), 200);
+    const { onBlur } = this.props
+    if (onBlur) {
+      onBlur();
+    } else {
+      return setTimeout(() => this.reset(), 200);
+    }
   }
 
   handleChange(e) {
