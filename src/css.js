@@ -3,7 +3,7 @@ export const mainCSS = `
   font-family: 'Lato', 'FontAwesome', sans-serif;
   min-width: 100%;
   width: 100%;
-  height: 30px;
+  height: 100%;
   background-color: #fff;
 }
 
