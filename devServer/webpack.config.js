@@ -11,17 +11,18 @@ if (NODE_ENV !== 'development') {
 }
 
 module.exports = {
+  mode: 'development',
   entry: path.resolve(__dirname, 'devApp.js'),
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, '../', 'devServer/build/public')
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|dist)/,
-        loaders: ['babel-loader']
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,

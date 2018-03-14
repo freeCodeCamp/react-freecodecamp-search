@@ -13,6 +13,7 @@ if (NODE_ENV !== 'production') {
 const outputPath = path.resolve(__dirname, 'dist');
 
 module.exports = {
+  mode: 'production',
   entry: './src/index.js',
   output: {
     filename: 'index.js',
@@ -20,11 +21,11 @@ module.exports = {
     libraryTarget: 'commonjs2'
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.jsx?$/,
         exclude: /(node_modules|dist)/,
-        loaders: ['babel-loader']
+        loader: 'babel-loader'
       },
       {
         test: /\.css$/,
