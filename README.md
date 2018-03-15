@@ -1,30 +1,5 @@
-# react-freecodecamp-search
+# This repository is now long in use
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/Bouncey/react-freecodecamp-search.svg)](https://greenkeeper.io/)
+Please use the [search mono repo](https://github.com/freeCodeCamp/search-mono-repo) instead.
 
-## Install
-
-`npm install react-freecodecamp-search -S`
-
-## Usage
-
-```jsx
-import FCCSearchBar from 'react-freecodecamp-search';
-
-// in your component
-return (
-  <FCCSearchBar
-    dropdown={false} // default
-    handleResults={yourResultHandler} // arrayOf(Object)
-    handleSearchTerm={yourOptionalSearchTermHandler} // input.value
-    handleSearchingState={yourHandler} // isSearching ? true : false
-    placeholder='This is optional'
-  />
-);
-```
-
-Then search for something
-
-## Contributing
-
-`npm run dev` and submit a PR :+1:
+Happy Coding!!
